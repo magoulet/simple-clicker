@@ -24,6 +24,13 @@
             border-radius: 10px;
             cursor: pointer;
         }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
         #resetButton {
             font-size: 16px;
             padding: 10px;
@@ -37,14 +44,35 @@
             font-size: 64px;
             margin: 20px;
         }
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <div id="countDisplay">0</div>
+    <div class="content">
+        <div id="countDisplay">0</div>
 
-    <button id="counterButton" onclick="incrementCounter()">Click Me!</button>
-    <button id="resetButton" onclick="resetCounter()">Reset</button>
+        <button id="counterButton" onclick="incrementCounter()">Click Me!</button>
+        <button id="resetButton" onclick="resetCounter()">Reset</button>
+    </div>
+
+    <div class="footer">
+        <script type="text/javascript" 
+                src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                data-name="bmc-button"
+                data-slug="magoulet"
+                data-color="#ffffff"
+                data-emoji="🍺"
+                data-font="Cookie"
+                data-text="Buy me a beer"
+                data-outline-color="#000000"
+                data-font-color="#000000"
+                data-coffee-color="#FFDD00">
+        </script>
+    </div>
 
     <script>
         let count = 0;
