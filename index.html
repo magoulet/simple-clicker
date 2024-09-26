@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Clicker - Track Your Clicks</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #counterButton {
+            font-size: 48px;
+            padding: 40px;
+            margin: 40px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #resetButton {
+            font-size: 16px;
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #countDisplay {
+            font-size: 64px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="countDisplay">0</div>
+
+    <button id="counterButton" onclick="incrementCounter()">Click Me!</button>
+    <button id="resetButton" onclick="resetCounter()">Reset</button>
+
+    <script>
+        let count = 0;
+
+        function incrementCounter() {
+            count++;
+            document.getElementById("countDisplay").textContent = count;
+        }
+
+        function resetCounter() {
+            count = 0;
+            document.getElementById("countDisplay").textContent = count;
+        }
+    </script>
+
+</body>
+</html>
