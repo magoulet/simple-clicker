@@ -5,3 +5,6 @@ bucket-policy.json
 # Don't ignore the examples
 !Makefile.example
 !bucket-policy.json.example
+
+# Google verification files
+google*.html
