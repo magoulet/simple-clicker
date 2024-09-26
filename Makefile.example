@@ -1,0 +1,41 @@
+# Replace with your actual S3 bucket name
+BUCKET_NAME = your-s3-bucket-name
+
+# Directory containing the HTML files (can be current directory)
+SOURCE_DIR = .
+
+# AWS CLI Profile (optional, remove or set to 'default' if not using profiles)
+AWS_PROFILE = default
+
+# AWS region (optional, if needed)
+REGION = us-west-2
+
+# Default target is 'help' if no target is specified
+.DEFAULT_GOAL := help
+
+# Help message
+help:
+	@echo "Usage: make [TARGET]"
+	@echo ""
+	@echo "Available targets:"
+	@echo "  deploy       Upload files from $(SOURCE_DIR) to S3 bucket: $(BUCKET_NAME)"
+	@echo "  clean        Delete all files from the S3 bucket: $(BUCKET_NAME)"
+	@echo "  list         List all files in the S3 bucket: $(BUCKET_NAME)"
+	@echo "  help         Display this help message"
+
+# Target for uploading files to S3
+deploy: 
+	@echo "Uploading files to S3 bucket: $(BUCKET_NAME)"
+	aws s3 sync $(SOURCE_DIR) s3://$(BUCKET_NAME) --profile $(AWS_PROFILE) --region $(REGION)
+
+# Target for cleaning up old files from S3 bucket
+clean:
+	@echo "Deleting all files from S3 bucket: $(BUCKET_NAME)"
+	aws s3 rm s3://$(BUCKET_NAME) --recursive --profile $(AWS_PROFILE) --region $(REGION)
+
+# Target to list the content of the bucket
+list:
+	@echo "Listing files in S3 bucket: $(BUCKET_NAME)"
+	aws s3 ls s3://$(BUCKET_NAME) --profile $(AWS_PROFILE) --region $(REGION)
+
+.PHONY: deploy clean list help

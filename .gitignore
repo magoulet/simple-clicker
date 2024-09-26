@@ -1,0 +1,7 @@
+# Ignore some stuff
+Makefile
+bucket-policy.json
+
+# Don't ignore the examples
+!Makefile.example
+!bucket-policy.json.example

@@ -8,9 +8,9 @@ A minimalist web-based click counter that allows users to track the number of ti
 - **Responsive Design**: The page is fully responsive and adapts to different screen sizes, making it easy to use on both desktop and mobile devices.
 - **Fast and Lightweight**: The app uses plain HTML, CSS, and JavaScript, without any external libraries or frameworks, ensuring fast performance.
 
-<!-- ## Demo
+## Demo
 
-You can see a live demo of the Simple Clicker [here](#). -->
+You can see a live demo of the Simple Clicker [here](http://simple-clicker-magoulet.s3-website-us-west-2.amazonaws.com/).
 
 ## Code Overview
 
@@ -36,6 +36,84 @@ You can see a live demo of the Simple Clicker [here](#). -->
 2. Open the `index.html` file in any web browser.
 3. Click the "Click Me!" button to increment the counter.
 4. Use the "Reset" button to reset the count to zero.
+
+### Step-by-Step Guide to Set Up S3 Static Website Hosting
+
+#### 1. **Create the S3 Bucket with Public Access**
+
+Run the following command to create a new S3 bucket (replace `<bucket-name>` with your desired bucket name and `<region>` with your AWS region, like `us-west-2`):
+
+```bash
+aws s3 mb s3://<bucket-name> --region <region> --profile default
+```
+
+#### 2. **Enable Static Website Hosting**
+
+Once the bucket is created, you need to configure it to serve a static website. Run the following command to set the bucket’s website configuration (replace `<bucket-name>` with your actual bucket name):
+
+```bash
+aws s3 website s3s
+```
+
+This command sets `index.html` as the default document (you can change it if your site has a different main file) and `error.html` as the error page.
+
+#### 3. **Set Bucket Policy for Public Access**
+
+In order for the bucket to serve content to the public, you need to modify the bucket's policy to allow public access to the files.
+
+Here is a good bucket policy JSON file  (replace `<bucket-name>` with your actual bucket name):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::<bucket-name>/*"
+    }
+  ]
+}
+```
+
+Then apply this policy to the bucket using the method of your choice.
+
+#### 4. **Upload Your Website Files**
+
+You can use the `Makefile` to deploy your website as we set up earlier, or run the following command to manually upload your files to the bucket:
+
+```bash
+aws s3 sync . s3://<bucket-name> --profile default
+```
+
+#### 5. **Access the Website**
+
+After setting up the bucket for static hosting, your website will be available at the following URL:
+
+```
+http://<bucket-name>.s3-website-<region>.amazonaws.com/
+```
+
+For example, if your bucket is named `simple-clicker-magoulet` and hosted in `us-west-2`, the URL would be:
+
+```
+http://simple-clicker-magoulet.s3-website-us-west-2.amazonaws.com/
+```
+
+### Optional: **Set Up a Custom Domain**
+
+If you have a custom domain (like `mydomain.com`), you can configure it to point to your S3 bucket using **Amazon Route 53** or another DNS provider.
+
+1. **Update Route 53 DNS (or your domain provider)**
+   - Create an **Alias Record** in Route 53 that points to your S3 bucket.
+   - In the Route 53 Console, choose "Alias to S3 website endpoint" when creating the record.
+
+2. **Set up SSL for HTTPS**
+   - If you want HTTPS support, you’ll need to use **Amazon CloudFront** as S3 static websites do not directly support HTTPS.
+
+This setup will allow you to serve a static website directly from your S3 bucket while keeping it publicly accessible.
 
 ## License
 
